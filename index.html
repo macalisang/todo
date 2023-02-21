@@ -53,16 +53,11 @@ window.localStorage.getItem('todoList');
             editButton.classList.add('btn', 'btn-warning', 'float-right');
             editButton.innerText = 'Edit';
             newItemElement.appendChild(editButton);
-            //add remove button
-            let removeButton = document.createElement('button');
-            removeButton.classList.add('btn', 'btn-danger', 'float-right');
-            removeButton.innerText = 'Remove';
-            newItemElement.appendChild(removeButton);
-            //add done button
-            let doneButton = document.createElement('button');
-            doneButton.classList.add('btn', 'btn-success', 'float-right');
-            doneButton.innerText = 'Done';
-            newItemElement.appendChild(doneButton);
+            //add complete button
+            let completeButton = document.createElement('button');
+            completeButton.classList.add('btn', 'btn-success', 'float-right');
+            completeButton.innerText = 'Complete';
+            newItemElement.appendChild(completeButton);
         });
 
         // When we press submit, add the item to the todo list
