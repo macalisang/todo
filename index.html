@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple TODO</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container"
+    <h1>Simple TODO</h1>
+
+    <!--Create a simple form to add items to a dodo list-->
+    <form id="todo-form" action="/todo" method="POST">
+        <div class="form-group">
+            <label for="todo">Add a TODO</label>
+            <input type="text" class="form-control" id="todo" name="todo" placeholder="Enter a TODO">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+    <!-- Display a list of items in the todo list -->
+    <ul class="list-group" id="todo-list">
+    </ul>
+
+    </div>
+
+    </body>
+
+    <script>
+window.localStorage.getItem('todoList');
+        // Get the state of the todo list from local storage
+        // If there is no state, set the state to an empty array
+        let todoList = JSON.parse(window.localStorage.getItem('todoList')) || [];
+
+        console.log(todoList);
+
+        // Render the todo list
+        todoList.forEach(function(item) {
+            let newItemElement = document.createElement('li');
+            newItemElement.className = 'list-group-item';
+            newItemElement.innerHTML = item;
+            document.getElementById('todo-list').appendChild(newItemElement);
+            //add edit buttton
+            let editButton = document.createElement('button');
+            editButton.classList.add('btn', 'btn-warning', 'float-right');
+            editButton.innerText = 'Edit';
+            newItemElement.appendChild(editButton);
+            //add remove button
+            let removeButton = document.createElement('button');
+            removeButton.classList.add('btn', 'btn-danger', 'float-right');
+            removeButton.innerText = 'Remove';
+            newItemElement.appendChild(removeButton);
+            //add done button
+            let doneButton = document.createElement('button');
+            doneButton.classList.add('btn', 'btn-success', 'float-right');
+            doneButton.innerText = 'Done';
+            newItemElement.appendChild(doneButton);
+        });
+
+        // When we press submit, add the item to the todo list
+        document.getElementById('todo-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            console.log('submit');  // This is just to make sure the event listener is working
+            let newItem = document.getElementById('todo').value;
+            todoList.push(newItem);
+            window.localStorage.setItem('todoList', JSON.stringify(todoList));
+            let newItemElement = document.createElement('li');
+            newItemElement.className = 'list-group-item';
+            // Add a button to remove the item from the todo list
+            let removeButton = document.createElement('button');
+            removeButton.classList.add('btn', 'btn-danger', 'float-right');
+            removeButton.innerText = 'Remove';
+            newItemElement.innerHTML = newItem;
+            document.getElementById('todo-list').appendChild(newItemElement);
+            document.getElementById('todo').value = '';
+            todoList.push(newItem);
+
+        });
+
+        // Add a button to remove the item from the todo list
+        // let removeButton = document.getElementsByClassName('remove-button');
+        // removeButton.classList.add('btn', 'btn-danger', 'float-right');
+
+        // Add an event listener to the remove button
+        //removeButton.addEventListener('click', function(event) {
+        //     event.preventDefault();
+        //     let itemToRemove = event.target.parentElement.innerText;
+        //     let index = todoList.indexOf(itemToRemove);
+        //     todoList.splice(index, 1);
+        //     window.localStorage.setItem('todoList', JSON.stringify(todoList));
+        //     event.target.parentElement.remove();
+        // });
+
+        // Save the todo list to local storage
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+
+        // Remove the item from the DOM
+        //newItemElement.remove();
+
+        // Add a button mark the item as done
+        // let doneButton = document.createElement('button');
+        // doneButton.classList.add('btn', 'btn-success', 'float-right');
+
+        // Add an event listener to the done button
+        // doneButton.addEventListener('click', function(event) {
+        //     event.preventDefault();
+        //     let itemToMarkDone = event.target.parentElement.innerText;
+        //     let index = todoList.indexOf(itemToMarkDone);
+        //     todoList.splice(index, 1);
+        //     window.localStorage.setItem('todoList', JSON.stringify(todoList));
+        //     event.target.parentElement.remove();
+        // });
+
+        // // append the done button and the remove button to the list item
+        // newItemElement.appendChild(doneButton);
+        // newItemElement.appendChild(removeButton);
+
+
+        // After adding the item, add the item to the todo list local storage array
+        // Then render the item to the page
+        
+
+        // Save the todo list to local storage array to local storage
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+
+        // Clear the input field
+        
+
+        // If I double click on a todo item, remove it from the list
+        document.getElementById('todo-list').addEventListener('dblclick', function(event) {
+            event.preventDefault();
+            console.log(event);
+            let itemToRemove = event.target.innerText;
+            let index = todoList.indexOf(itemToRemove);
+            todoList.splice(index, 1);
+            window.localStorage.setItem('todoList', JSON.stringify(todoList));
+            event.target.remove();
+        });
+        // Remove the item from the todo list array
+        todoList = todoList.filter(function(item) {
+            return item !== itemToRemove;
+        });
+        // Save the todoList array to local storage
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+
+</script>
+
+    </html>
